@@ -17,13 +17,18 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    apitesting();
+    fetchApiConfig();
   }, []);
 
-  const apitesting = () => {
-    fetchDataFromAPI("/movie/popular")
+  const fetchApiConfig = () => {
+    fetchDataFromAPI("/configuration")
       .then((res) => {
-        dispatch(getApiCOnfiguration(res));
+        const url = {
+          backdrop: res.images.secure_base_url + "original",
+          profile: res.images.secure_base_url + "original",
+          poster: res.images.secure_base_url + "original",
+        };
+        dispatch(getApiCOnfiguration(url));
       })
       .catch((err) => {
         console.log(err);
